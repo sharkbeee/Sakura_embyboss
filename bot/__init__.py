@@ -65,77 +65,115 @@ api = config.api
 save_config()
 
 LOGGER.info("配置文件加载完毕")
-from pyrogram.types import BotCommand
 
 '''定义不同等级的人使用不同命令'''
 user_p = [
-    BotCommand("start", "[私聊] 开启用户面板"),
-    BotCommand("myinfo", "[用户] 查看状态"),
-    BotCommand("count", "[用户] 媒体库数量"),
-    BotCommand("red", "[用户/禁言] 发红包"),
-    BotCommand("srank", "[用户/禁言] 查看计分")]
+    {'command': "start", 'description': "[私聊] 开启用户面板"},
+    {'command': "myinfo", 'description': "[用户] 查看状态"},
+    {'command': "count", 'description': "[用户] 媒体库数量"},
+    {'command': "red", 'description': "[用户/禁言] 发红包"},
+    {'command': "srank", 'description': "[用户/禁言] 查看计分"}]
 
 # 取消 BotCommand("exchange", "[私聊] 使用注册码")
 admin_p = user_p + [
-    BotCommand("kk", "管理用户 [管理]"),
-    BotCommand("score", "加/减积分 [管理]"),
-    BotCommand("coins", f"加/减{sakura_b} [管理]"),
-    BotCommand("deleted", f"清理死号 [管理]"),
-    BotCommand("kick_not_emby", f"踢出当前群内无号崽 [管理]"),
-    BotCommand("renew", "调整到期时间 [管理]"),
-    BotCommand("rmemby", "删除用户[包括非tg] [管理]"),
-    BotCommand("prouser", "增加白名单 [管理]"),
-    BotCommand("revuser", "减少白名单 [管理]"),
-    BotCommand("rev_white_channel", "移除皮套人白名单 [管理]"),
-    BotCommand("white_channel", "添加皮套人白名单 [管理]"),
-    BotCommand("unban_channel", "解封皮套人 [管理]"),
-    BotCommand("syncgroupm", "消灭不在群的人 [管理]"),
-    BotCommand("syncunbound", "消灭未绑定bot的emby账户 [管理]"),
-    BotCommand("scan_embyname", "扫描同名的用户记录 [管理]"),
-    BotCommand("low_activity", "手动运行活跃检测 [管理]"),
-    BotCommand("check_ex", "手动到期检测 [管理]"),
-    BotCommand("uranks", "召唤观影时长榜，失效时用 [管理]"),
-    BotCommand("days_ranks", "召唤播放次数日榜，失效时用 [管理]"),
-    BotCommand("week_ranks", "召唤播放次数周榜，失效时用 [管理]"),
-    BotCommand("sync_favorites", "同步收藏记录 [管理]"),
-    BotCommand("embyadmin", "开启emby控制台权限 [管理]"),
-    BotCommand("ucr", "私聊创建非tg的emby用户 [管理]"),
-    BotCommand("uinfo", "查询指定用户名 [管理]"),
-    BotCommand("urm", "删除指定用户名 [管理]"),
-    BotCommand("only_rm_emby", "删除指定的Emby账号 [管理]"),
-    BotCommand("only_rm_record", "删除指定的tgid数据库记录 [管理]"),
-    BotCommand("restart", "重启bot [管理]"),
-    BotCommand("update_bot", "更新bot [管理]"),
+    {'command': "kk", 'description': "管理用户 [管理]"},
+    {'command': "score", 'description': "加/减积分 [管理]"},
+    {'command': "coins", 'description': f"加/减{sakura_b} [管理]"},
+    {'command': "deleted", 'description': f"清理死号 [管理]"},
+    {'command': "kick_not_emby", 'description': f"踢出当前群内无号崽 [管理]"},
+    {'command': "renew", 'description': "调整到期时间 [管理]"},
+    {'command': "rmemby", 'description': "删除用户[包括非tg] [管理]"},
+    {'command': "prouser", 'description': "增加白名单 [管理]"},
+    {'command': "revuser", 'description': "减少白名单 [管理]"},
+    {'command': "rev_white_channel", 'description': "移除皮套人白名单 [管理]"},
+    {'command': "white_channel", 'description': "添加皮套人白名单 [管理]"},
+    {'command': "unban_channel", 'description': "解封皮套人 [管理]"},
+    {'command': "syncgroupm", 'description': "消灭不在群的人 [管理]"},
+    {'command': "syncunbound", 'description': "消灭未绑定bot的emby账户 [管理]"},
+    {'command': "scan_embyname", 'description': "扫描同名的用户记录 [管理]"},
+    {'command': "low_activity", 'description': "手动运行活跃检测 [管理]"},
+    {'command': "check_ex", 'description': "手动到期检测 [管理]"},
+    {'command': "uranks", 'description': "召唤观影时长榜，失效时用 [管理]"},
+    {'command': "days_ranks", 'description': "召唤播放次数日榜，失效时用 [管理]"},
+    {'command': "week_ranks", 'description': "召唤播放次数周榜，失效时用 [管理]"},
+    {'command': "sync_favorites", 'description': "同步收藏记录 [管理]"},
+    {'command': "embyadmin", 'description': "开启emby控制台权限 [管理]"},
+    {'command': "ucr", 'description': "私聊创建非tg的emby用户 [管理]"},
+    {'command': "uinfo", 'description': "查询指定用户名 [管理]"},
+    {'command': "urm", 'description': "删除指定用户名 [管理]"},
+    {'command': "only_rm_emby", 'description': "删除指定的Emby账号 [管理]"},
+    {'command': "only_rm_record", 'description': "删除指定的tgid数据库记录 [管理]"},
+    {'command': "restart", 'description': "重启bot [管理]"},
+    {'command': "update_bot", 'description': "更新bot [管理]"},
 ]
 
 owner_p = admin_p + [
-    BotCommand("proadmin", "添加bot管理 [owner]"),
-    BotCommand("revadmin", "移除bot管理 [owner]"),
-    BotCommand("renewall", "一键派送天数给所有未封禁的用户 [owner]"),
-    BotCommand("coinsall", "一键派送币币给所有未封禁的用户 [owner]"),
-    BotCommand("callall", "群发消息给每个人 [owner]"),
-    BotCommand("bindall_id", "一键更新用户们Embyid [owner]"),
-    BotCommand("backup_db", "手动备份数据库[owner]"),
-    BotCommand('restore_from_db', '恢复Emby账户[owner]'),
-    BotCommand("config", "开启bot高级控制面板 [owner]"),
-    BotCommand("embylibs_unblockall", "一键开启所有用户的媒体库 [owner]"),
-    BotCommand("embylibs_blockall", "一键关闭所有用户的媒体库 [owner]")
-]
+    {'command': "proadmin", 'description': "添加bot管理 [owner]"},
+    {'command': "revadmin", 'description': "移除bot管理 [owner]"},
+    {'command': "renewall", 'description': "一键派送天数给所有未封禁的用户 [owner]"},
+    {'command': "coinsall", 'description': "一键派送币币给所有未封禁的用户 [owner]"},
+    {'command': "callall", 'description': "群发消息给每个人 [owner]"},
+    {'command': "bindall_id", 'description': "一键更新用户们Embyid [owner]"},
+    {'command': "backup_db", 'description': "手动备份数据库[owner]"},
+    {'command': 'restore_from_db', 'description': '恢复Emby账户[owner]'},
+    {'command': "config", 'description': "开启bot高级控制面板 [owner]"},
+    {'command': "embylibs_unblockall", 'description': "一键开启所有用户的媒体库 [owner]"},
+    {'command': "embylibs_blockall", 'description': "一键关闭所有用户的媒体库 [owner]"}]
 if len(extra_emby_libs) > 0:
-    owner_p += [BotCommand("extraembylibs_blockall", "一键关闭所有用户的额外媒体库 [owner]"),
-                BotCommand("extraembylibs_unblockall", "一键开启所有用户的额外媒体库 [owner]")]
+    owner_p += [{'command': "extraembylibs_blockall", 'description': "一键关闭所有用户的额外媒体库 [owner]"},
+                {'command': "extraembylibs_unblockall", 'description': "一键开启所有用户的额外媒体库 [owner]"}]
 
 with contextlib.suppress(ImportError):
     import uvloop
 
     uvloop.install()
-from pyrogram import enums
-from pyromod import Client
+from telethon import TelegramClient
 
-proxy = {} if not config.proxy.scheme else config.proxy.dict()
+# Prepare Telethon proxy configuration
+telethon_proxy = None
+if config.proxy.scheme and config.proxy.hostname and config.proxy.port:
+    proxy_username = config.proxy.username if hasattr(config.proxy, 'username') and config.proxy.username else None
+    proxy_password = config.proxy.password if hasattr(config.proxy, 'password') and config.proxy.password else None
+    
+    scheme_lower = config.proxy.scheme.lower()
+    if scheme_lower == 'socks5':
+        telethon_proxy = {
+            'proxy_type': 'socks5',
+            'addr': config.proxy.hostname,
+            'port': config.proxy.port,
+            'username': proxy_username,
+            'password': proxy_password,
+            'rdns': True
+        }
+    elif scheme_lower in ['http', 'https']:
+        # For HTTP proxies, Telethon typically expects a dictionary like SOCKS
+        # or relies on environment variables. The tuple format is less common for TelegramClient constructor.
+        # A common dict format for HTTP:
+        telethon_proxy = {
+            'proxy_type': 'http', # Explicitly 'http' often needed if scheme is 'http' or 'https'
+            'addr': config.proxy.hostname,
+            'port': config.proxy.port,
+            'username': proxy_username,
+            'password': proxy_password,
+            'rdns': True 
+        }
+        # If the scheme was 'https', some libraries expect 'https' as proxy_type or handle it via 'http' type.
+        # Sticking to 'http' type for `telethon_proxy` dictionary structure as it's more common.
+    # Add more proxy schemes here if necessary, e.g., MTProto
 
-bot = Client(bot_name, api_id=owner_api, api_hash=owner_hash, bot_token=bot_token, proxy=proxy,
-             workers=300,
-             max_concurrent_transmissions=1000, parse_mode=enums.ParseMode.MARKDOWN)
+client_args = {
+    'api_id': owner_api,
+    'api_hash': owner_hash
+}
+if telethon_proxy:
+    client_args['proxy'] = telethon_proxy
 
-LOGGER.info("Clinet 客户端准备")
+# Note: bot_token is not passed here. It will be used in bot.start(bot_token=bot_token) in main.py
+# Parameters like workers, max_concurrent_transmissions are not directly applicable.
+# Telethon uses asyncio for concurrency. ParseMode defaults to Markdown.
+bot = TelegramClient(
+    bot_name,  # session file name
+    **client_args
+)
+
+LOGGER.info("Telethon Client 客户端准备")
